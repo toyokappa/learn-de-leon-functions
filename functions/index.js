@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 const mailgun = require('mailgun-js')
-const apiKey = functions.config().mail.api_key
-const domain = functions.config().mail.domain
-const mailTo = functions.config().mail.to
+const apiKey =  functions.config().mail.api_key
+const domain =  functions.config().mail.domain
+const mailTo =  functions.config().mail.to
+const mailBcc = functions.config().mail.bcc
 
 const mg = mailgun({ apiKey, domain })
 
@@ -19,6 +20,7 @@ exports.sendMail = functions.https.onCall(async (data, _context) => {
   const mail = {
     from: 'no-reply@learndeleon.com',
     to: mailTo,
+    bcc: mailBcc,
     subject: '【ランデレオン】お問い合わせがありました',
     text: mailTemplate(data)
   }
